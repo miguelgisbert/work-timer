@@ -58,8 +58,8 @@ const Timer: React.FC = () => {
     }
 
     return (
-        <Grid container spacing={2}>
-            <Grid xs={12} sm={6} container item spacing={1} direction={'column'}>
+        <Grid container spacing={2} justifyContent="center" textAlign="center" padding={5}>
+            <Grid xs={12} sm={6} container item spacing={2} direction={'column'}>
                 <Grid item>{formatTime(workedTime)}</Grid>
                 <Grid item>
                     {!startTime ? (
@@ -75,7 +75,7 @@ const Timer: React.FC = () => {
                     )}
                 </Grid>
             </Grid>
-            <Grid xs={12} sm={6} container item spacing={1} direction={'column'}>
+            <Grid xs={12} sm={6} container item spacing={2} direction={'column'}>
                 <Grid item>{formatTime(pausedTime)}</Grid>
                 <Grid item>
                     {!startPause ? (
@@ -93,8 +93,8 @@ const Timer: React.FC = () => {
                     )}
                 </Grid>
             </Grid>
-            <Grid xs={12} item>
-            <Grid item>start time: {startTime?.toLocaleTimeString()}</Grid>
+            <Grid container direction={"column"} xs={12} item padding={5} marginTop={5} spacing={1}>
+                <Grid item>start time: {startTime?.toLocaleTimeString()}</Grid>
                 <Grid item>end time: {endTime?.toLocaleTimeString()}</Grid> 
                 <Grid item>start pause: {startPause?.toLocaleTimeString()}</Grid>
                 <Grid item>end pause: {endPause?.toLocaleTimeString()}</Grid>
