@@ -17,10 +17,15 @@ const mgWorkTimer = require('mg-work-timer');
 mgWorkTimer.start();
 ```
 
-## Support
+## Funding
 
 If you find it useful please support my work! 
 
-[![Buy me a coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/miguelgisbert)
+[![Buy me a coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/miguelgisbert)ç
+
+
+## Keywords
+
+clock in out work timer job attendance tracking stats stopwatch rest break time monitor track record stats
 
 
