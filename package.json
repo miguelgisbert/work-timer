@@ -2,7 +2,7 @@
   "name": "mg-work-timer",
   "description": "Timer app to register work and rest starting and finishig times",
   "author": "Miguel Gisbert",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "GPL",
   "main": "src/index.txs",
   "dependencies": {
