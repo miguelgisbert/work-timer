@@ -21,7 +21,7 @@
     "stats"
   ],
   "author": "Miguel Gisbert",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "license": "GPL",
   "main": "app/page.tsx",
   "scripts": {
