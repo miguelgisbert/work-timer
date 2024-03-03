@@ -1,8 +1,6 @@
 'use client'
 
-import dynamic from 'next/dynamic';
-
-const Timer = dynamic(() => import('./components/Timer'), { ssr: false });
+import Timer from './components/Timer'
 
 export default function Home() {
   return (
