@@ -12,7 +12,7 @@ const Timer: React.FC = () => {
     const [isResting, setIsResting] = useState<boolean>(false)
 
     useEffect(() => {
-        let interval: NodeJS.Timeout | null = null
+        let interval: ReturnType<typeof setTimeout> | null = null
         if (isWorking) {
             interval = setInterval(() => {
             const now: Date = new Date()    
@@ -32,7 +32,7 @@ const Timer: React.FC = () => {
     }, [startTime, isWorking])
 
     useEffect(() => {
-        let interval: NodeJS.Timeout | null = null
+        let interval: ReturnType<typeof setTimeout> | null = null
         if (isResting) {
             interval = setInterval(() => {
                 const now: Date = new Date()    
