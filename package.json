@@ -25,6 +25,7 @@
   "license": "GPL",
   "main": "lib/src/main.js",
   "module": "lib/src/main.js",
+  "files": ["lib"],
   "type": "module",
   "scripts": {
     "dev": "vite",
