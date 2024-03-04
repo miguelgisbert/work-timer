@@ -1,13 +1,37 @@
 {
-  "name": "work-timer",
-  "private": true,
-  "version": "0.0.0",
+  "name": "mg-work-timer",
+  "description": "Timer app to register work and rest starting and finishig times",
+  "keywords": [
+    "clock",
+    "in",
+    "out",
+    "work",
+    "timer",
+    "job",
+    "attendance",
+    "tracking",
+    "stats",
+    "stopwatch",
+    "rest",
+    "break",
+    "time",
+    "monitor",
+    "track",
+    "record",
+    "stats"
+  ],
+  "author": "Miguel Gisbert",
+  "version": "0.1.9",
+  "license": "GPL",
+  "main": "lib/src/index.js",
+  "module": "lib/src/index.js",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "swc ./src -d lib"
   },
   "dependencies": {
     "@emotion/styled": "^11.11.0",
@@ -17,6 +41,8 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@swc/cli": "^0.3.10",
+    "@swc/core": "^1.4.2",
     "@types/react": "^18.2.56",
     "@types/react-dom": "^18.2.19",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
