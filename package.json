@@ -21,7 +21,7 @@
     "stats"
   ],
   "author": "Miguel Gisbert",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "license": "GPL",
   "main": "lib/src/main.js",
   "module": "lib/src/main.js",
