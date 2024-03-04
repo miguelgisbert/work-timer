@@ -29,6 +29,7 @@
     "lib"
   ],
   "type": "module",
+  "types": "lib/src/main.d.ts",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
