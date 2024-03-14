@@ -4,7 +4,9 @@ mg-work-timer is a React-typescript package to have a simple stopwatch to regist
 
 [![npm](https://img.shields.io/npm/v/mg-work-timer)](https://www.npmjs.com/package/mg-work-timer)
 
-![Timer exapmle](https://raw.githubusercontent.com/miguelgisbert/work-timer/master/src/assets/TimerScreenshot.png)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/miguelgisbert/work-timer/master/src/assets/TimerScreenshot.png" alt="Timer example">
+</p>
 
 ## Installation
 
@@ -12,7 +14,7 @@ mg-work-timer is a React-typescript package to have a simple stopwatch to regist
 npm install mg-work-timer
 ```
 
-## Use cases
+## Use
 
 ```ts
 import { Timer } from 'mg-work-timer'
