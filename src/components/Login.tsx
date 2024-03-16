@@ -3,9 +3,11 @@ import { auth } from '../firebaseConfig'
 import { onAuthStateChanged, User } from 'firebase/auth'
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
 import { FirebaseError } from 'firebase/app'
-import { Button, Box, TextField, Popper } from '@mui/material'
+import { Button, Box, TextField, Popper, Typography } from '@mui/material'
 
 function Login() {
+
+  console.log(auth)
 
   const [showLogin, setShowLogin] = useState<boolean>(false)
   const [email, setEmail] = useState<string>('')
@@ -17,6 +19,9 @@ function Login() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
+      setEmail('')
+      setPassword('')
+      setErrorMessage('')
     });
 
     // Cleanup subscription on unmount
@@ -85,7 +90,7 @@ function Login() {
       {!user ? (
         <>
           <Button color="inherit" onClick={handleClick}>Login</Button>
-          <Button color="inherit" sx={{ lineHeight: 1.3 }}>Create <br /> Account</Button>
+          <Button color="inherit" onClick={signUp} sx={{ lineHeight: 1.3 }}>Create <br /> Account</Button>
         </>
       ) : (
         <p>{user.email}</p>
@@ -114,6 +119,7 @@ function Login() {
           />
         </Box>
         <Button onClick={signIn}>Sign In</Button>
+        <Typography>{errorMessage}</Typography>
       </Popper>
       {/* <input type="email" value={email} onChange={e => setEmail(e.target.value)} />
       <input type="password" value={password} onChange={e => setPassword(e.target.value)} />

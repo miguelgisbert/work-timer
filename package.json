@@ -32,7 +32,7 @@
   "types": "lib/src/main.d.ts",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && ncp .env.production dist/",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "prepare": "swc ./src -d lib && ncp src/assets lib/src/assets"

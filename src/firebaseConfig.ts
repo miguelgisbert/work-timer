@@ -2,13 +2,13 @@ import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_APP_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_APP_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_APP_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_APP_FIREBASE_APP_ID,
-  measurementId: import.meta.env.VITE_APP_FIREBASE_MEASUREMENT_ID
+  apiKey: "AIzaSyBZr3W2feV81BW7r7KZHwe0qGDYkkZoBzc",
+  authDomain: "mg-work-timer.firebaseapp.com",
+  projectId: "mg-work-timer",
+  storageBucket: "mg-work-timer.appspot.com",
+  messagingSenderId: "571792365902",
+  appId: "1:571792365902:web:927c302f9b5c85a028e61f",
+  measurementId: "G-85XYQY3R7R",
 }
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
