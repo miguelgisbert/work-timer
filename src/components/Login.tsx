@@ -5,7 +5,6 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'fire
 import { FirebaseError } from 'firebase/app'
 import { Button, Box, TextField, Popper, Typography } from '@mui/material'
 import LogoutIcon from '@mui/icons-material/Logout'
-import { set } from 'firebase/database'
 
 function Login() {
 
