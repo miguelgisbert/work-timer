@@ -147,11 +147,6 @@ function Login() {
         {formToShow === 'signup' && <Button onClick={signUp}>Create Account</Button>}
         <Typography>{errorMessage}</Typography>
       </Popper>
-      {/* <input type="email" value={email} onChange={e => setEmail(e.target.value)} />
-      <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
-      <button onClick={signIn}>Sign In</button>
-      <button onClick={signUp}>Sign Up</button>
-      {errorMessage && <p>{errorMessage}</p>} */}
     </>
   );
 }
