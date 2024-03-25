@@ -3,7 +3,7 @@ import { Button, Grid, Typography } from '@mui/material'
 import { TimerData } from '../types'
 import { formatTime } from '../utils/timeUtils'
 import 'firebase/compat/firestore'
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { getAuth, onAuthStateChanged, User } from 'firebase/auth'
 import { getDoc, doc, setDoc, Timestamp, collection, query, where, getDocs, orderBy } from "firebase/firestore"
 import { db } from "../firebaseConfig"
 import TimerLog from './TimerLog'
@@ -20,6 +20,7 @@ const Timer: React.FC = () => {
     const [isWorking, setIsWorking] = useState<boolean>(false)
     const [isResting, setIsResting] = useState<boolean>(false)
     const [weekData, setWeekData] = useState<TimerData[]>([])
+    const [user, setUser] = useState<User | null>(null)
 
     useEffect(() => {
         let interval: ReturnType<typeof setTimeout> | null = null
@@ -65,7 +66,7 @@ const Timer: React.FC = () => {
         if (startTime) {
             saveDataToFirestore();
         }
-    }, [startTime, endTime, startPause, endPause, workedTime, pausedTime]);
+    }, [startTime, endTime, startPause, endPause, workedTime, pausedTime])
     
     
     const saveDataToFirestore = async () => {
@@ -73,7 +74,7 @@ const Timer: React.FC = () => {
         const auth = getAuth();
         let userId = '';
         if (auth.currentUser) {
-            userId = auth.currentUser.uid;
+            userId = auth.currentUser.uid
         }
 
         const timerData = {
@@ -86,9 +87,9 @@ const Timer: React.FC = () => {
             pausedTime
         }
     
-        const docId = startTime ? startTime.toISOString().split('T')[0] : new Date().toISOString().split('T')[0];
-        const docRef = doc(db, "users", userId, "timerData", docId);
-        await setDoc(docRef, timerData, { merge: true });
+        const docId = startTime ? startTime.toISOString().split('T')[0] : new Date().toISOString().split('T')[0]
+        const docRef = doc(db, "users", userId, "timerData", docId)
+        await setDoc(docRef, timerData, { merge: true })
     }
 
     
@@ -99,18 +100,18 @@ const Timer: React.FC = () => {
 
     useEffect(() => {
         const fetchData = async (userId: string) => {
-            const docId = new Date().toISOString().split('T')[0];
+            const docId = new Date().toISOString().split('T')[0]
             const docRef = doc(db, "users", userId, "timerData", docId)
             const docSnap = await getDoc(docRef)
             console.log(docSnap)
             if (docSnap.exists()) {
                 const data = docSnap.data()
-                setStartTime(data.startTime?.toDate() || null);
-                setEndTime(data.endTime?.toDate() || null);
-                setStartPause(data.startPause?.toDate() || null);
-                setEndPause(data.endPause?.toDate() || null);
-                setWorkedTime(data.workedTime || 0);
-                setPausedTime(data.pausedTime || 0);
+                setStartTime(data.startTime?.toDate() || null)
+                setEndTime(data.endTime?.toDate() || null)
+                setStartPause(data.startPause?.toDate() || null)
+                setEndPause(data.endPause?.toDate() || null)
+                setWorkedTime(data.workedTime || 0)
+                setPausedTime(data.pausedTime || 0)
 
                 // Check if the user is working or resting
                 if (data.startTime && !data.endTime && (!data.startPause || data.endPause)) {
@@ -119,8 +120,8 @@ const Timer: React.FC = () => {
                 if (data.startPause && !data.endPause) {
                     setIsResting(true);
                 }
-                setWorkedTime(data.workedTime);
-                setPausedTime(data.pausedTime);
+                setWorkedTime(data.workedTime)
+                setPausedTime(data.pausedTime)
             }
         }
 
@@ -149,22 +150,23 @@ const Timer: React.FC = () => {
                 })
                 setWeekData(weekData)
             } catch (error) {
-                console.error("Error fetching data for week:", error);
+                console.error("Error fetching data for week:", error)
             }
         }
     
         const auth = getAuth();
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
-                fetchData(user.uid);
-                fetchDataForWeek(user.uid);
+                setUser(user)
+                fetchData(user.uid)
+                fetchDataForWeek(user.uid)
             }
         })
         return () => unsubscribe()
     }, []);
 
     return (
-        <Grid container spacing={2} justifyContent="center" textAlign="center" padding={5}>
+        <Grid container justifyContent="center" textAlign="center" padding={5}>
             <Grid xs={12} sm={6} container item spacing={2} direction={'column'}>
                 <Grid item>
                     <Typography>{formatTime(workedTime)}</Typography>
@@ -178,7 +180,9 @@ const Timer: React.FC = () => {
                     ) : (
                         <Button onClick={() => {
                             setIsWorking(false)
+                            setIsResting(false)
                             setEndTime(new Date())
+                            {!endPause ? setEndPause(new Date()) : null}
                         }}>End day</Button>
                     )}
                 </Grid>
@@ -221,7 +225,7 @@ const Timer: React.FC = () => {
                     <Typography>paused time: {formatTime(pausedTime)}</Typography>
                 </Grid>
             </Grid>
-            <TimerLog rows={weekData} />
+            {user && <TimerLog rows={weekData} />}
         </Grid>
     )
 }

@@ -3,18 +3,32 @@ import { auth } from '../firebaseConfig'
 import { onAuthStateChanged, User, signOut } from 'firebase/auth'
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
 import { FirebaseError } from 'firebase/app'
-import { Button, Box, TextField, Popper, Typography } from '@mui/material'
+import { Button, Box, TextField, Popper, Typography, Snackbar, Alert, SnackbarCloseReason, Stack, Switch } from '@mui/material'
 import LogoutIcon from '@mui/icons-material/Logout'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { doc, setDoc, getFirestore } from 'firebase/firestore'
+import { DocumentReference } from 'firebase/firestore'
 
-function Login() {
+interface LoginProps {
+  showPopper: boolean
+  company: DocumentReference | null
+}
 
-  const [formToShow, setFormToShow] = useState<'login' | 'signup' | 'none'>('none')
+const Login: React.FC<LoginProps> = ({ showPopper, company }) => {
+
+  const [formToShow, setFormToShow] = useState<'login' | 'signup' | 'none'>(showPopper ? 'signup' : 'none')
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
+  const [isWorker, setIsWorker] = useState(false)
+  const [isCompany, setIsCompany] = useState(true)
   const [errorMessage, setErrorMessage] = useState<string>('')
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const [user, setUser] = useState<User | null>(null)
+
+  const theme = useTheme()
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -25,7 +39,12 @@ function Login() {
     })
     // Cleanup subscription on unmount
     return () => unsubscribe()
-  }, []);
+  }, [])
+
+  useEffect(() => {
+    setFormToShow(showPopper ? 'signup' : 'none')
+    console.log("showPopper", showPopper)
+  }, [showPopper])
 
   const signIn = async () => {
     setFormToShow('none')
@@ -37,27 +56,29 @@ function Login() {
       if (error instanceof Error) {
         const firebaseError = error as FirebaseError
         switch (firebaseError.code) {
-          case 'auth/wrong-password':
-            setErrorMessage('Wrong password.')
+          case 'auth/invalid-credential':
+            setErrorMessage('Invalid user or password.')
             break;
-          case 'auth/user-not-found':
-            setErrorMessage('User not found.')
+          case 'auth/invalid-email':
+            setErrorMessage('Invalid email.')
             break;
           default:
             setErrorMessage('Unknown error.')
         }
-        console.log(firebaseError.code, firebaseError.message)
+        setOpen(true)
+        console.log(firebaseError.code)
       }
     }
-  };
+  }
+
+  const db = getFirestore()
 
   const signUp = async () => {
     setFormToShow('none')
     setAnchorEl(null)
     try {
-      console.log(email, password)
-      await createUserWithEmailAndPassword(auth, email, password)
-      console.log("User signed up successfully.")
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+      await setDoc(doc(db, "users", userCredential.user.uid), { email: email, isWorker: isWorker, isCompany: isCompany })
     } catch (error) {
       if (error instanceof Error) {
         const firebaseError = error as FirebaseError
@@ -78,7 +99,8 @@ function Login() {
           default:
             setErrorMessage('S\'ha produït un error desconegut.')
         }
-        console.log(firebaseError.code, firebaseError.message)
+        setOpen(true)
+        console.log(firebaseError.code)
       }
     }
   }
@@ -103,20 +125,44 @@ function Login() {
     setFormToShow(formToShow === 'signup' ? 'none' : 'signup')
   }
 
+  const [open, setOpen] = useState(false);
+
+  const handleClose = (event: React.SyntheticEvent | Event, reason: SnackbarCloseReason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  }
+
+  const handleAlertClose = (event: React.SyntheticEvent<Element, Event>) => {
+    handleClose(event, 'timeout');
+  }
+
+  const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsWorker(event.target.checked)
+    setIsCompany(!event.target.checked)
+  }
+
   return (
     <>
+    <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}
+      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+      <Alert onClose={handleAlertClose} severity="error" sx={{ width: '100%' }}>
+        {errorMessage}
+      </Alert>
+    </Snackbar>
       {!user ? (
-        <>
-          <Button color="inherit" onClick={toggleLoginForm}>Login</Button>
-          <Button color="inherit" onClick={toggleSignUpForm} sx={{ lineHeight: 1.3 }}>Create <br /> Account</Button>
-        </>
+        <Box sx={{ display: "flex", alignItems: "stretch" }}>
+          <Button color="inherit" sx={{ display: "flex", alignItems: "center", height: "100%" }} onClick={toggleLoginForm}>Login</Button>
+          <Button color="inherit" sx={{ display: "flex", alignItems: "center", height: "100%", lineHeight: 1.3 }} onClick={toggleSignUpForm} >Create <br /> Account</Button>
+        </Box>
       ) : (
-        <Box gap={2} sx={{ display: "flex", flexDirection: "row" }}>
-          <p>{user.email}</p>
-          <Button><LogoutIcon onClick={logout} /></Button>
+        <Box gap={2} sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+          <Typography>{user.email}</Typography>
+          <Button><LogoutIcon onClick={logout} sx={{ color: "white" }} /></Button>
         </Box>
       )}
-      <Popper open={formToShow === 'login' || formToShow === 'signup'} anchorEl={anchorEl} placement="bottom-end" sx={{ boxShadow: 5, padding:"40px", width:"340px", backgroundColor: "white" }}>
+      <Popper open={formToShow === 'login' || formToShow === 'signup'} anchorEl={isSmallScreen ? null : anchorEl} placement={isSmallScreen ? 'bottom' : 'bottom-end'} sx={{ boxShadow: 5, padding:"40px", width: isSmallScreen ? "70vw" : "340px", backgroundColor: "white", top: isSmallScreen ? '70px!important' : '20px!important', left: isSmallScreen ? '5vw!important' : 'auto' }}>
         <Box  component="form" 
               sx={{ 
                 backgroundColor: "white", 
@@ -126,7 +172,17 @@ function Login() {
                 padding: 0,
                 gap: 2 
               }} 
-              padding={5} >
+              padding={5} 
+              onSubmit={e => {
+                console.log("test")
+                e.preventDefault()
+                if (formToShow === 'login') {
+                  console.log("signing in")
+                  signIn()
+                } else if (formToShow === 'signup') {
+                  signUp()
+                }
+              }}>
           <TextField
             required
             id="email_login"
@@ -142,13 +198,20 @@ function Login() {
             value={password}
             onChange={e => setPassword(e.target.value)}
           />
+          {formToShow === 'signup' && (
+            <Stack direction="row" spacing={1} alignItems="center" justifyContent="center">
+              <Typography fontSize={14} fontWeight={isCompany ? 700 : 400}>Company</Typography>
+              <Switch defaultChecked={false} inputProps={{ 'aria-label': 'ant design' }} onChange={handleSwitchChange} />
+              <Typography fontSize={14} fontWeight={isWorker ? 700 : 400}>Worker</Typography>
+            </Stack>
+          )}
+          <Button type="submit" onClick={formToShow === 'login' ? signIn : signUp}>
+            {formToShow === 'login' ? 'Sign In' : 'Create Account'}
+          </Button>
         </Box>
-        {formToShow === 'login' && <Button onClick={signIn}>Sign In</Button>}
-        {formToShow === 'signup' && <Button onClick={signUp}>Create Account</Button>}
-        <Typography>{errorMessage}</Typography>
       </Popper>
     </>
-  );
+  )
 }
 
 export { Login, auth }

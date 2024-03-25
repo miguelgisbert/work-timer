@@ -1,0 +1,23 @@
+Todo: 
+    ☐ Afegir link de la guia de Registre de Jornada: https://www.mites.gob.es/ficheros/ministerio/GuiaRegistroJornada.pdf
+    ☐ Dividir usuaris en empresa i treballador
+    ✔ Crear un switch al SignUp per a empresa o treballador @done(24-03-25 17:48)
+    ✔ Crear vista d'empresa @done(24-03-25 17:48)
+    ☐ Crear formulari de registre d'empleats per a usuari empresa
+        ☐ Eliminar el switch company/worker del SignUp si vens des d'Add Worker
+        ☐ Afegir el camp de víncul a empresa al SignUp worker
+    ☐ Afegir una X per tancar el Popper
+    ☐ Centrar el Popper quan vens des d'Add Worker
+    ☐ Crear informes pdf 
+
+Informe:
+    - Pot ser en pdf
+    - Les dades han de ser reals i invariables
+    - Es poden adjuntar correccions
+    Ha de tindre:
+        - Hora d'entrada
+        - Hora d'eixida
+        - Hores extres realitzades
+
+
+
