@@ -166,7 +166,7 @@ const Timer: React.FC = () => {
     }, []);
 
     return (
-        <Grid container justifyContent="center" textAlign="center" padding={5}>
+        <Grid container justifyContent="center" textAlign="center" padding={5} >
             <Grid xs={12} sm={6} container item spacing={2} direction={'column'}>
                 <Grid item>
                     <Typography>{formatTime(workedTime)}</Typography>

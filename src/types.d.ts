@@ -8,3 +8,5 @@ export interface TimerData {
     workedTime: number;
     pausedTime: number;
 }
+
+export type Breakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl'

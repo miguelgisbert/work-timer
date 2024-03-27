@@ -1,7 +1,10 @@
-import  { AppBar, Toolbar } from '@mui/material'
+import  { AppBar, Toolbar, Box } from '@mui/material'
 import { Login } from './Login'
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm'
 import { DocumentReference } from 'firebase/firestore'
+import logo from '../assets/logo.svg'
+import { useContext } from 'react'
+import { ScreenSizeContext } from '../ScreenSizeContext'
 
 interface HeaderProps {
     showPopper: boolean
@@ -9,13 +12,17 @@ interface HeaderProps {
   }
   
   const Header: React.FC<HeaderProps> = ({ showPopper, company }) => {
+    const ScreenSize = useContext(ScreenSizeContext)
     return (
-        <AppBar position="static" sx={{ display: "flex", flexDirection: "row", alignItems:"center", justifyContent: "space-between" }}>
-            <AccessAlarmIcon sx={{ color: "white", marginLeft: "40px", fontSize: "40px" }} />
-        <Toolbar sx={{ maxWidth: "80%", display: "flex", alignItems: "stretch" }}>
-            <Login  showPopper={showPopper} company={company} />
-        </Toolbar>
-        </AppBar>
+        <Box paddingBottom="100px">
+            <AppBar position="static" sx={{ display: "flex", flexDirection: "row", alignItems:"center", justifyContent: "space-between", position: "fixed" }}>
+                <AccessAlarmIcon sx={{ color: ScreenSize === "sm" ? "transparent" : "white", marginLeft: "40px", fontSize: "40px" }} />
+                <img src={logo} alt="Logo" style={{ height: ScreenSize === "sm" ? "20px" : "27px", position: "fixed", left: ScreenSize === "sm" ? "20px" : "50%", transform: ScreenSize === "sm" ? "" : "translateX(-50%)" }} />
+                <Toolbar sx={{ maxWidth: "80%", display: "flex", alignItems: "stretch" }}>
+                    <Login  showPopper={showPopper} company={company} />
+                </Toolbar>
+            </AppBar>
+        </Box>
     )
 }
 

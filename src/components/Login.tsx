@@ -43,7 +43,10 @@ const Login: React.FC<LoginProps> = ({ showPopper, company }) => {
 
   useEffect(() => {
     setFormToShow(showPopper ? 'signup' : 'none')
-    console.log("showPopper", showPopper)
+    if (company) {
+      setIsWorker(true)
+      setIsCompany(false)
+    }
   }, [showPopper])
 
   const signIn = async () => {
@@ -78,7 +81,12 @@ const Login: React.FC<LoginProps> = ({ showPopper, company }) => {
     setAnchorEl(null)
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password)
-      await setDoc(doc(db, "users", userCredential.user.uid), { email: email, isWorker: isWorker, isCompany: isCompany })
+      await setDoc(doc(db, "users", userCredential.user.uid), {
+        email: email, 
+        isWorker: isWorker, 
+        isCompany: isCompany,
+        company: company
+      })
     } catch (error) {
       if (error instanceof Error) {
         const firebaseError = error as FirebaseError
@@ -198,7 +206,7 @@ const Login: React.FC<LoginProps> = ({ showPopper, company }) => {
             value={password}
             onChange={e => setPassword(e.target.value)}
           />
-          {formToShow === 'signup' && (
+          {formToShow === 'signup' && company === null && (
             <Stack direction="row" spacing={1} alignItems="center" justifyContent="center">
               <Typography fontSize={14} fontWeight={isCompany ? 700 : 400}>Company</Typography>
               <Switch defaultChecked={false} inputProps={{ 'aria-label': 'ant design' }} onChange={handleSwitchChange} />
