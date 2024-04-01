@@ -10,3 +10,5 @@ export interface TimerData {
 }
 
 export type Breakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+
+type CustomUser = User & { isCompany?: boolean }

@@ -7,7 +7,7 @@ interface UsersListProps {
 
 const UsersList: React.FC<UsersListProps> = ({ onAddWorker }) => {
     return (
-        <Grid container justifyContent="center" textAlign="center" padding={5}>
+        <Grid container justifyContent="center" textAlign="center" padding={5} sx={{ paddingTop: "150px" }}>
             <Grid item>
                 <Button sx={{ padding:"10px" }} onClick={onAddWorker}>
                     <PersonAddAltIcon sx={{marginRight:"20px"}} />
@@ -19,17 +19,17 @@ const UsersList: React.FC<UsersListProps> = ({ onAddWorker }) => {
                         <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
                         </ListItemAvatar>
                         <ListItemText
-                        primary="Brunch this weekend?"
-                        secondary={
-                            <Typography
-                                sx={{ display: 'inline' }}
-                                component="span"
-                                variant="body2"
-                                color="text.primary"
-                                >
-                                Ali Connors
-                            </Typography>
-                        }
+                            primary="Brunch this weekend?"
+                            secondary={
+                                <Typography
+                                    sx={{ display: 'inline' }}
+                                    component="span"
+                                    variant="body2"
+                                    color="text.primary"
+                                    >
+                                    Ali Connors
+                                </Typography>
+                            }
                         />
                     </ListItem>
                 </List>

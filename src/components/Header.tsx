@@ -14,8 +14,8 @@ interface HeaderProps {
   const Header: React.FC<HeaderProps> = ({ showPopper, company }) => {
     const ScreenSize = useContext(ScreenSizeContext)
     return (
-        <Box paddingBottom="100px">
-            <AppBar position="static" sx={{ display: "flex", flexDirection: "row", alignItems:"center", justifyContent: "space-between", position: "fixed" }}>
+        <Box sx={{ position: "fixed", zIndex: "10", maxWidth: "1280px" }}>
+            <AppBar sx={{ display: "flex", flexDirection: "row", alignItems:"center", justifyContent: "space-between", maxWidth: "1280px", position: "fixed", left: "auto", right: "auto" }}>
                 <AccessAlarmIcon sx={{ color: ScreenSize === "sm" ? "transparent" : "white", marginLeft: "40px", fontSize: "40px" }} />
                 <img src={logo} alt="Logo" style={{ height: ScreenSize === "sm" ? "20px" : "27px", position: "fixed", left: ScreenSize === "sm" ? "20px" : "50%", transform: ScreenSize === "sm" ? "" : "translateX(-50%)" }} />
                 <Toolbar sx={{ maxWidth: "80%", display: "flex", alignItems: "stretch" }}>

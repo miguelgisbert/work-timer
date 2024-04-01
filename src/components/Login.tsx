@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { auth } from '../firebaseConfig'
-import { onAuthStateChanged, User, signOut } from 'firebase/auth'
+import { signOut } from 'firebase/auth'
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
 import { FirebaseError } from 'firebase/app'
 import { Button, Box, TextField, Popper, Typography, Snackbar, Alert, SnackbarCloseReason, Stack, Switch } from '@mui/material'
@@ -9,6 +9,7 @@ import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { doc, setDoc, getFirestore } from 'firebase/firestore'
 import { DocumentReference } from 'firebase/firestore'
+import { UserContext } from '../UserContext'
 
 interface LoginProps {
   showPopper: boolean
@@ -17,6 +18,7 @@ interface LoginProps {
 
 const Login: React.FC<LoginProps> = ({ showPopper, company }) => {
 
+  const { user } = useContext(UserContext)
   const [formToShow, setFormToShow] = useState<'login' | 'signup' | 'none'>(showPopper ? 'signup' : 'none')
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -25,12 +27,10 @@ const Login: React.FC<LoginProps> = ({ showPopper, company }) => {
   const [errorMessage, setErrorMessage] = useState<string>('')
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const [user, setUser] = useState<User | null>(null)
-
   const theme = useTheme()
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
-  useEffect(() => {
+  /*useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
       setEmail('')
@@ -39,7 +39,7 @@ const Login: React.FC<LoginProps> = ({ showPopper, company }) => {
     })
     // Cleanup subscription on unmount
     return () => unsubscribe()
-  }, [])
+  }, [])*/
 
   useEffect(() => {
     setFormToShow(showPopper ? 'signup' : 'none')
@@ -135,7 +135,7 @@ const Login: React.FC<LoginProps> = ({ showPopper, company }) => {
 
   const [open, setOpen] = useState(false);
 
-  const handleClose = (event: React.SyntheticEvent | Event, reason: SnackbarCloseReason) => {
+  const handleClose = (_: React.SyntheticEvent | Event, reason: SnackbarCloseReason) => {
     if (reason === 'clickaway') {
       return;
     }

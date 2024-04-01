@@ -1,4 +1,3 @@
-import { Timestamp } from "firebase/firestore"
 
 export const formatTime = (timeInSeconds: number): string => {
     const date = new Date(0)
