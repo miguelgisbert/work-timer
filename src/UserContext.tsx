@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, Dispatch, SetStateAction } from 'react'
-import { onAuthStateChanged, User } from 'firebase/auth'
+import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from './firebaseConfig'
 import { CustomUser } from './types'
 
