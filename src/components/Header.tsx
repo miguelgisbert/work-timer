@@ -9,9 +9,9 @@ import { ScreenSizeContext } from '../ScreenSizeContext'
 interface HeaderProps {
     showPopper: boolean
     company: DocumentReference | null
-  }
+}
   
-  const Header: React.FC<HeaderProps> = ({ showPopper, company }) => {
+const Header: React.FC<HeaderProps> = ({ showPopper, company }) => {
     const ScreenSize = useContext(ScreenSizeContext)
     return (
         <Box sx={{ position: "fixed", zIndex: "10", maxWidth: "1280px" }}>

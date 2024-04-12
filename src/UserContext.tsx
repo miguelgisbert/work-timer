@@ -1,16 +1,24 @@
-import { createContext, useState, useEffect } from 'react'
+import { createContext, useState, useEffect, Dispatch, SetStateAction } from 'react'
 import { onAuthStateChanged, User } from 'firebase/auth'
 import { auth } from './firebaseConfig'
+import { CustomUser } from './types'
 
 interface UserContextProps {
-  user: User | null
+  user: CustomUser | null
+  setUser: Dispatch<SetStateAction<CustomUser | null>>
   loading: boolean
+  setLoading: Dispatch<SetStateAction<boolean>>
 }
 
-export const UserContext = createContext<UserContextProps>({ user: null, loading: true })
+export const UserContext = createContext<UserContextProps>({ 
+  user: null, 
+  setUser: () => {},
+  loading: true,
+  setLoading: () => {}
+})
 
 export const UserProvider: React.FC = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<CustomUser | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -24,7 +32,7 @@ export const UserProvider: React.FC = ({ children }) => {
   }, [])
 
   return (
-    <UserContext.Provider value={{ user, loading }}>
+    <UserContext.Provider value={{ user, setUser, loading, setLoading }}>
       {children}
     </UserContext.Provider>
   )

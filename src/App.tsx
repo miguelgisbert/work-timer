@@ -9,17 +9,21 @@ import UsersList from './components/UsersList'
 import { ScreenSizeContext } from './ScreenSizeContext'
 import { Breakpoint, CustomUser } from './types'
 import { ThemeProvider } from '@mui/material/styles'
-import { UserProvider, UserContext } from './UserContext'
+import { UserContext } from './UserContext'
+import { PopperProvider } from './PopperContext'
 
 function App() {
   
-  const { user } = useContext(UserContext) as { user: CustomUser, loading: boolean }
+  const { user, loading } = useContext(UserContext) as { user: CustomUser, loading: boolean }
+  if (loading) {
+    return <div>Loading...</div>; // Or some other loading indicator
+  }
   const isCompany = user?.isCompany
   // const [isCompany, setIsCompany] = useState<boolean>(false)
   //const auth = getAuth()
   //const db = getFirestore()
   const [company] = useState<DocumentReference | null>(null)
-  const [showPopper, setShowPopper] = useState<boolean>(false)
+  const [showPopper] = useState<boolean>(false)
 
   const theme = useTheme()
   const isXs = useMediaQuery(theme.breakpoints.down('xs'));
@@ -39,41 +43,17 @@ function App() {
     currentBreakpoint = 'lg';
   }
 
-  // useEffect(() => {
-  //   onAuthStateChanged(auth, async (user) => {
-  //     if (user) {
-  //       const docRef = doc(db, 'users', user.uid);
-  //       const docSnap = await getDoc(docRef);
-  //       if (docSnap.exists()) {
-  //         const data = docSnap.data()
-  //         if(data && data.isCompany) {
-  //           setIsCompany(data.isCompany)
-  //           setCompany(docRef)
-  //         }
-  //       } else {
-  //         console.log('No user document!');
-  //       }
-  //     } else {
-  //       setIsCompany(false);
-  //     }
-  //   })
-  // }, [auth, db])
-
-  const handleAddWorker = () => {
-    setShowPopper(true)
-  }
-
   return (
-    <ThemeProvider theme={theme}>
-      <ScreenSizeContext.Provider value={currentBreakpoint}><UserProvider>
+    <ThemeProvider theme={theme}><PopperProvider>
+      <ScreenSizeContext.Provider value={currentBreakpoint}>
         <Header showPopper={showPopper} company={company} />
         { isCompany ? (
-          <UsersList onAddWorker={handleAddWorker} />
+          <UsersList />
         ) : (
           <Timer />
         ) }
-      </UserProvider></ScreenSizeContext.Provider>
-    </ThemeProvider>
+      </ScreenSizeContext.Provider>
+    </PopperProvider></ThemeProvider>
   )
 
 }

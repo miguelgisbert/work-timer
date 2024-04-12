@@ -1,4 +1,4 @@
-import firebase from 'firebase/compat/app';
+import firebase from 'firebase/compat/app'
 
 export interface TimerData {
     startTime: firebase.firestore.Timestamp | null;
@@ -12,3 +12,5 @@ export interface TimerData {
 export type Breakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 type CustomUser = User & { isCompany?: boolean }
+
+type FormToShow = 'login' | 'signup' | 'none'
