@@ -34,13 +34,13 @@ export default App
 To use the Login system create a project on Firebase, activate auth, enable the login with email at authentication options and change the firebaseConfig data at /src/firebaseConfig.ts to your own data
 ```js
 const firebaseConfig = {
-  apiKey: "AIzaSyBZr3W2feV81BW7r7KZHwe0qGDYkkZoBzc",
-  authDomain: "mg-work-timer.firebaseapp.com",
-  projectId: "mg-work-timer",
-  storageBucket: "mg-work-timer.appspot.com",
-  messagingSenderId: "571792365902",
-  appId: "1:571792365902:web:927c302f9b5c85a028e61f",
-  measurementId: "G-85XYQY3R7R",
+  apiKey: "____________________________________",
+  authDomain: "___________.firebaseapp.com",
+  projectId: "___________",
+  storageBucket: "___________.appspot.com",
+  messagingSenderId: "000000000000",
+  appId: "1:000000000000:web:__________________",
+  measurementId: "G-__________",
 }
 ```
 
