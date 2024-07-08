@@ -1,11 +1,11 @@
 import { createContext, useState, useEffect, Dispatch, SetStateAction } from 'react'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from './firebaseConfig'
-import { CustomUser } from './types'
+import { User } from './types'
 
 interface UserContextProps {
-  user: CustomUser | null
-  setUser: Dispatch<SetStateAction<CustomUser | null>>
+  user: User | null
+  setUser: Dispatch<SetStateAction<User | null>>
   loading: boolean
   setLoading: Dispatch<SetStateAction<boolean>>
 }
@@ -18,12 +18,12 @@ export const UserContext = createContext<UserContextProps>({
 })
 
 export const UserProvider: React.FC = ({ children }) => {
-  const [user, setUser] = useState<CustomUser | null>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user)
+      setUser(user as User | null) // Type assertion to User (instead of Firebase
       setLoading(false)
     })
 

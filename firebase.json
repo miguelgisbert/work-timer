@@ -1,6 +1,5 @@
 {
   "hosting": {
-    "site": "mgworktimer",
     "public": "dist",
     "ignore": [
       "firebase.json",
