@@ -9,10 +9,10 @@ Todo:
     ✔ Afegir una X per tancar el Popper @done(24-04-18 01:39)
     ✔ Centrar el Popper quan vens des d'Add Worker @done(24-04-18 01:39)
     ☐ Crear informes pdf 
-    ☐ Reset del comptador al iniciar o tancar sessió
+    ✔ Reset del comptador al iniciar o tancar sessió @done(24-04-23 19:52)
     ☐ Acordió per mostrar el TimerLog de cada treballador en la vista d'empresa
     
-    ☐ Change image at readme.md
+    ✔ Change image at readme.md @done(24-04-23 19:52)
 
 Informe:
     - Pot ser en pdf
