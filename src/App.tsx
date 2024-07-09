@@ -1,28 +1,21 @@
 import './App.css'
 import { useState, useContext } from 'react'
 import { useMediaQuery, useTheme } from '@mui/material'
-import Timer from './components/Timer'
+import PrivateArea from './components/PrivateArea'
 import Header from './components/Header'
-//import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import { DocumentReference } from 'firebase/firestore'
-import UsersList from './components/UsersList'
 import { ScreenSizeContext } from './ScreenSizeContext'
-import { Breakpoint, CustomUser } from './types'
+import { Breakpoint, User } from './types'
 import { ThemeProvider } from '@mui/material/styles'
 import { UserContext } from './UserContext'
 import { PopperProvider } from './PopperContext'
 
 function App() {
   
-  const { user, loading } = useContext(UserContext) as { user: CustomUser, loading: boolean }
+  const { user, loading } = useContext(UserContext) as { user: User, loading: boolean }
   if (loading) {
     return <div>Loading...</div>; // Or some other loading indicator
   }
-  const isCompany = user?.isCompany
-  // const [isCompany, setIsCompany] = useState<boolean>(false)
-  //const auth = getAuth()
-  //const db = getFirestore()
-  const [company] = useState<DocumentReference | null>(null)
+
   const [showPopper] = useState<boolean>(false)
 
   const theme = useTheme()
@@ -46,11 +39,11 @@ function App() {
   return (
     <ThemeProvider theme={theme}><PopperProvider>
       <ScreenSizeContext.Provider value={currentBreakpoint}>
-        <Header showPopper={showPopper} company={company} />
-        { isCompany ? (
-          <UsersList />
+        <Header showPopper={showPopper} />
+        { user ? (
+          <PrivateArea user={user} />
         ) : (
-          <Timer />
+          <></>
         ) }
       </ScreenSizeContext.Provider>
     </PopperProvider></ThemeProvider>

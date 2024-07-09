@@ -1,5 +1,9 @@
 {
   "projects": {
-    "default": "mg-work-timer"
-  }
+    "default": "mg-indigitall-login",
+    "indigitall-login": "mg-indigitall-login"
+  },
+  "targets": {},
+  "etags": {},
+  "dataconnectEmulatorConfig": {}
 }
